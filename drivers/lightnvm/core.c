@@ -769,18 +769,6 @@ free_ppa_list:
 }
 EXPORT_SYMBOL(nvm_erase_sync);
 
-int nvm_get_l2p_tbl(struct nvm_tgt_dev *tgt_dev, u64 slba, u32 nlb,
-		    nvm_l2p_update_fn *update_l2p, void *priv)
-{
-	struct nvm_dev *dev = tgt_dev->parent;
-
-	if (!dev->ops->get_l2p_tbl)
-		return 0;
-
-	return dev->ops->get_l2p_tbl(dev, slba, nlb, update_l2p, priv);
-}
-EXPORT_SYMBOL(nvm_get_l2p_tbl);
-
 int nvm_get_area(struct nvm_tgt_dev *tgt_dev, sector_t *lba, sector_t len)
 {
 	struct nvm_dev *dev = tgt_dev->parent;

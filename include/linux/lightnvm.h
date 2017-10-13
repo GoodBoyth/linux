@@ -49,10 +49,7 @@ struct nvm_id;
 struct nvm_dev;
 struct nvm_tgt_dev;
 
-typedef int (nvm_l2p_update_fn)(u64, u32, __le64 *, void *);
 typedef int (nvm_id_fn)(struct nvm_dev *, struct nvm_id *);
-typedef int (nvm_get_l2p_tbl_fn)(struct nvm_dev *, u64, u32,
-				nvm_l2p_update_fn *, void *);
 typedef int (nvm_op_bb_tbl_fn)(struct nvm_dev *, struct ppa_addr, u8 *);
 typedef int (nvm_op_set_bb_fn)(struct nvm_dev *, struct ppa_addr *, int, int);
 typedef int (nvm_submit_io_fn)(struct nvm_dev *, struct nvm_rq *);
@@ -65,7 +62,6 @@ typedef void (nvm_dev_dma_free_fn)(void *, void*, dma_addr_t);
 
 struct nvm_dev_ops {
 	nvm_id_fn		*identity;
-	nvm_get_l2p_tbl_fn	*get_l2p_tbl;
 	nvm_op_bb_tbl_fn	*get_bb_tbl;
 	nvm_op_set_bb_fn	*set_bb_tbl;
 
@@ -481,8 +477,6 @@ extern int nvm_max_phys_sects(struct nvm_tgt_dev *);
 extern int nvm_submit_io(struct nvm_tgt_dev *, struct nvm_rq *);
 extern int nvm_submit_io_sync(struct nvm_tgt_dev *, struct nvm_rq *);
 extern int nvm_erase_sync(struct nvm_tgt_dev *, struct ppa_addr *, int);
-extern int nvm_get_l2p_tbl(struct nvm_tgt_dev *, u64, u32, nvm_l2p_update_fn *,
-			   void *);
 extern int nvm_get_area(struct nvm_tgt_dev *, sector_t *, sector_t);
 extern void nvm_put_area(struct nvm_tgt_dev *, sector_t);
 extern void nvm_end_io(struct nvm_rq *);
